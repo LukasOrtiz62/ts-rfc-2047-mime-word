@@ -38,3 +38,10 @@ Encodes `str` as a single RFC 2047 encoded-word using Base64. The `charset` labe
 ### `encode(str, charset = 'UTF-8')`
 
 Returns `str` unchanged if it needs no encoding. Otherwise returns one or more encoded-words joined by spaces, splitting so that no encoded-word exceeds 75 characters. Throws `TypeError` for non-string input, and `RangeError` if the charset name is too long to fit within the 75-character limit.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
